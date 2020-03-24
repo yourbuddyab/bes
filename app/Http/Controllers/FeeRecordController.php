@@ -53,7 +53,12 @@ class FeeRecordController extends Controller
             $temp[$key]['student_id']=$request->studentname[$key];
             $temp[$key]['amount']=$request->amount[$key];
             $temp[$key]['date']=$request->date[$key];
-            $temp[$key]['action']=$request->action[$key];
+            if(isset($temp[$key]['date'])){
+                $temp[$key]['action']=1;
+            }
+            else{
+                $temp[$key]['action']=0;
+            }
             feeRecord::create($temp[$key]);
         }
         return redirect('/feerecord')->with('status', 'Fee Updated!!');
@@ -146,12 +151,28 @@ class FeeRecordController extends Controller
                 $st = count(FeeRecord::where('fee','1st Installment')->where('class_id',$request->class_id)->get());
                 //  ? $student : '1st Installment not found.';
                 $nd = count(FeeRecord::where('fee','2nd Installment')->where('class_id',$request->class_id)->get());
-                return ($st == 1 || $nd == 1) ? $student : '1st  Installment not found.';
+                if(empty($st)){
+                    return '1st Installment not found.';
+                }elseif(!empty($nd)){
+                    return '2nd Installment Already Exist.';
+                }else{
+                    return $student;
+                }
                 break;
             case '3rd Installment':
                 $st = count(FeeRecord::where('fee','1st Installment')->where('class_id',$request->class_id)->get());
                 $nd = count(FeeRecord::where('fee','2nd Installment')->where('class_id',$request->class_id)->get());
-                return ($st == 1 && $nd == 1) ? $student : 'Previous Installment not found.';
+                $rd = count(FeeRecord::where('fee','3rd Installment')->where('class_id',$request->class_id)->get());
+                if(empty($st)){
+                    return '1st Installment not found.';
+                }elseif(empty($nd)){
+                    return '2nd Installment not found.';
+                }elseif(!empty($rd)){
+                    return '3rd Installment Already Exist.';
+                }else{
+                    return $student;
+                }
+                // return ($st == 1 && $nd == 1) ? $student : 'Previous Installment not found.';
                 break;
             default:
                 break;

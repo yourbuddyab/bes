@@ -70,14 +70,21 @@
         url: "/fee/check",
         data: {'class_id':class_id,'_token':_token, 'fee':fee},
         success: function (response) {
+            console.log(response);
             if (response == 'Already Exist') {
                 alert('Already Exist');
                  window.location.reload();
             } else if(response == '1st Installment not found.') {
                 alert('1st Installment not found.');
                  window.location.reload();
-            } else if(response == 'Previous Installment not found.'){
-                alert('Previous Installment not found.');
+            } else if(response == '2nd Installment not found.') {
+                alert('2nd Installment not found.');
+                 window.location.reload();
+            } else if(response == '2nd Installment Already Exist.') {
+                alert('2nd Installment Already Exist.');
+                 window.location.reload();
+            } else if(response == '3rd Installment Already Exist.'){
+                alert('3rd Installment Already Exist.');
                  window.location.reload();
             } else {
             $("tbody").each(function(){
