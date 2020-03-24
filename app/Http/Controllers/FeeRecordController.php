@@ -96,6 +96,8 @@ class FeeRecordController extends Controller
     public function update(Request $request, FeeRecord $feerecord)
     {
         $feerecord->update([
+            'amount' => $request->amount,
+            'date' => $request->date,
             'action' => $request->action,
         ]);
         return redirect('feerecord');

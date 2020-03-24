@@ -56,13 +56,22 @@
                                 <td>{{$item->student->name}}</td>
                                 <td>{{$item->class->class}}</td>
                                 <td>{{$item->fee}}</td>
-                                <td>{{$item->amount}}</td>
-                                <td>{{$item->date}}</td>
-                                <td><span class="badge @if($item->action==1) badge-success @else badge-warning @endif">@if($item->action==1) Paid @else Unpaid @endif</span></td>
-                                <td>
                                 <form action="/feerecord/{{$item->id}}" method="post">
                                     @csrf
                                     @method('PATCH')
+                                <td>@if (empty($item->amount))
+                                    <input type="text" class="form-control" name="amount" placeholder="Enter amount"/>
+                                @else
+                                    {{$item->amount}}
+                                @endif</td>
+                                <td>@if (empty($item->date))
+                                    <input type="text" class="form-control" name="date" placeholder="Enter Date"/>
+                                @else
+                                    {{$item->date}}
+                                @endif</td>
+                                
+                                <td><span class="badge @if($item->action==1) badge-success @else badge-warning @endif">@if($item->action==1) Paid @else Unpaid @endif</span></td>
+                                <td>
                                     <select name="action" id="" class="form-control" onchange="this.form.submit();">
                                         <option selected disabled>Action</option>
                                         <option value="1">Paid</option>
