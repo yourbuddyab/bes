@@ -40,26 +40,36 @@ class FeeRecordController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->studentname;
-        $keys = array_keys($data);
-        foreach ($data as $key => $val) {
-            $value[] = $val;
-            $temp[]=[
-                'fee'   => $request->fee,
-                'class_id'   => $request->class_id,
-            ];
-        }
-        foreach ($value as $key => $fess) {
-            $temp[$key]['student_id']=$request->studentname[$key];
-            $temp[$key]['amount']=$request->amount[$key];
-            $temp[$key]['date']=$request->date[$key];
-            if(isset($temp[$key]['date'])){
-                $temp[$key]['action']=1;
+        if($request->checkform ==1){
+            feeRecord::create($request->validate([
+                'student_id' => 'required | string',
+                'class_id'   => 'required | string',
+                'amount'     => 'required | string',
+                'date'       => 'required | string',
+                'action'     => 'required | string',
+            ]));
+        }else{
+            $data = $request->studentname;
+            $keys = array_keys($data);
+            foreach ($data as $key => $val) {
+                $value[] = $val;
+                $temp[]=[
+                    'fee'   => $request->fee,
+                    'class_id'   => $request->class_id,
+                ];
             }
-            else{
-                $temp[$key]['action']=0;
+            foreach ($value as $key => $fess) {
+                $temp[$key]['student_id']=$request->studentname[$key];
+                $temp[$key]['amount']=$request->amount[$key];
+                $temp[$key]['date']=$request->date[$key];
+                if(isset($temp[$key]['date'])){
+                    $temp[$key]['action']=1;
+                }
+                else{
+                    $temp[$key]['action']=0;
+                }
+                feeRecord::create($temp[$key]);
             }
-            feeRecord::create($temp[$key]);
         }
         return redirect('/feerecord')->with('status', 'Fee Updated!!');
     }
@@ -95,12 +105,12 @@ class FeeRecordController extends Controller
      */
     public function update(Request $request, FeeRecord $feerecord)
     {
-        $feerecord->update([
-            'amount' => $request->amount,
-            'date' => $request->date,
-            'action' => $request->action,
-        ]);
-        return redirect('feerecord');
+        // $feerecord->update([
+        //     'amount' => $request->amount,
+        //     'date' => $request->date,
+        //     'action' => $request->action,
+        // ]);
+        // return redirect('feerecord');
     }
 
     /**

@@ -45,8 +45,8 @@
                                 <th>Installment</th>
                                 <th>Amount</th>
                                 <th>Date</th>
-                                <th>Status</th>
-                                <th>Action</th>
+                                {{-- <th>Status</th>
+                                <th>Action</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -55,8 +55,8 @@
                                 <td>{{$key+1}}</td>
                                 <td>{{$item->student->name}}</td>
                                 <td>{{$item->class->class}}</td>
-                                <td>{{$item->fee}}</td>
-                                <form action="/feerecord/{{$item->id}}" method="post">
+                                <td>{{empty($item->fee) ? 'Not available' : $item->fee}}</td>
+                                {{-- <form action="/feerecord/{{$item->id}}" method="post">
                                     @csrf
                                     @method('PATCH')
                                 <td>@if (empty($item->amount))
@@ -78,7 +78,9 @@
                                         <option value="0">Unpaid</option>
                                     </select>
                                 </form>
-                                </td>
+                                </td> --}}
+                                <td>{{$item->amount}}</td>
+                                <td>{{$item->date}}</td>
                                 </tr>                                
                             @endforeach
                         </tbody>

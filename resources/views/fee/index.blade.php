@@ -11,6 +11,42 @@
                     <div class="card-title" style="padding:8px">Student Fee Detail</div>
                 </div>
                 <div class="card-body">
+                    <h4 class="h4">Custom Fees fill</h4>
+                    <form action="/feerecord" method="post">
+                        @csrf
+                        <input hidden type="text" name="checkform" value="1">
+                        <input hidden type="text" name="action" value="1">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <select name="class_id" id="" class="form-control">
+                                    <option value="">Select Class</option>
+                                    @foreach ($class_id as $item)
+                                        <option value="{{$item->id}}">{{$item->class}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="student_id" placeholder="Student Id" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input type="text" name="amount" placeholder="Enter Amount " class="form-control">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" name="date" placeholder="Enter Date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-12 text-right">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="text-center">
+                        <div class=""><img src="/image/or.png" alt=""></div>
+                    </div>
+
                     <h4 class="h4">Fees fill</h4>
                     <form action="/feerecord" method="post">
                         @csrf
